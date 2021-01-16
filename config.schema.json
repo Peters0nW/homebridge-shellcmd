@@ -17,23 +17,24 @@
         "required": false,
         "default": "Peters0nW"
       },
-        "model": {
+      "model": {
         "title": "Model",
         "type": "string",
         "required": false,
         "default": "WHT-XXX"
       },
-        "serialnr": {
+      "serialnr": {
         "title": "Serial Number",
         "type": "string",
         "required": false,
         "default": "XXXX-XXXX"
       },
-        "serialnr": {
-        "title": "Serial Number",
+      "firmware": {
+        "title": "Firmware Rev.",
         "type": "string",
         "required": false,
-        "default": "XXXX-XXXX"
+        "default": "1.0"
+      }
     }
   }
 }

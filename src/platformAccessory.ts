@@ -1,4 +1,4 @@
-import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback, UUID } from 'homebridge';
+import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback } from 'homebridge';
 
 import { ExampleHomebridgePlatform } from './platform';
 
@@ -17,6 +17,8 @@ export class ExamplePlatformAccessory {
   private exampleStates = {
     On: false,
     Brightness: 100,
+    Hue: 0,
+    Saturation: 0,
   };
 
   constructor(
@@ -26,8 +28,8 @@ export class ExamplePlatformAccessory {
 
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
-      .setCharacteristic(this.platform.Characteristic.Manufacturer, "Peters0nW")
-      .setCharacteristic(this.platform.Characteristic.Model, 'WHT-9999')
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Peters0nW')
+      .setCharacteristic(this.platform.Characteristic.Model, 'Model-EINS')
       .setCharacteristic(this.platform.Characteristic.SerialNumber, accessory.UUID);
 
     // get the LightBulb service if it exists, otherwise create a new LightBulb service
@@ -36,40 +38,28 @@ export class ExamplePlatformAccessory {
 
     // set the service name, this is what is displayed as the default name on the Home app
     // in this example we are using the name we stored in the `accessory.context` in the `discoverDevices` method.
-    this.service.setCharacteristic(this.platform.Characteristic.Name, accessory.context.device.exampleDisplayName);
-
+    // this.service.setCharacteristic(this.platform.Characteristic.Name, accessory.context.device.exampleDisplayName);
     // each service must implement at-minimum the "required characteristics" for the given service type
     // see https://developers.homebridge.io/#/service/Lightbulb
-
     // register handlers for the On/Off Characteristic
     this.service.getCharacteristic(this.platform.Characteristic.On)
       .on('set', this.setOn.bind(this))                // SET - bind to the `setOn` method below
-      .on('get', this.getOn.bind(this));               // GET - bind to the `getOn` method below
-
-    // register handlers for the Brightness Characteristic
+      .on('get', this.getOn.bind(this));
     this.service.getCharacteristic(this.platform.Characteristic.Brightness)
       .on('set', this.setBrightness.bind(this));       // SET - bind to the 'setBrightness` method below
+    this.service.getCharacteristic(this.platform.Characteristic.Hue)
+      .on('set', this.setHue.bind(this));
+    this.service.getCharacteristic(this.platform.Characteristic.Saturation)
+      .on('set', this.setSaturation.bind(this));
 
-
-    /**
-     * Creating multiple services of the same type.
-     * 
-     * To avoid "Cannot add a Service with the same UUID another Service without also defining a unique 'subtype' property." error,
-     * when creating multiple services of the same type, you need to use the following syntax to specify a name and subtype id:
-     * this.accessory.getService('NAME') || this.accessory.addService(this.platform.Service.Lightbulb, 'NAME', 'USER_DEFINED_SUBTYPE_ID');
-     * 
-     * The USER_DEFINED_SUBTYPE must be unique to the platform accessory (if you platform exposes multiple accessories, each accessory
-     * can use the same sub type id.)
-     */
+      this.accessory.addService(this.platform.Service.TemperatureSensor, 'tempSensor', 'B001');
 
     // Example: add two "motion sensor" services to the accessory
-    const motionSensorOneService = this.accessory.getService('Motion Sensor One Name') ||
-      this.accessory.addService(this.platform.Service.MotionSensor, 'Motion Sensor One Name', 'YourUniqueIdentifier-1');
-
-    const motionSensorTwoService = this.accessory.getService('Motion Sensor Two Name') ||
-      this.accessory.addService(this.platform.Service.MotionSensor, 'Motion Sensor Two Name', 'YourUniqueIdentifier-2');
-
-    
+    /*     
+        const humidity-2 = this.accessory.getService('Sensor Two') ||
+          this.accessory.addService(this.platform.Service.HumiditySensor, 'Sensor Two', 'RH-002');
+        .)
+         */
     /**
      * Updating characteristics values asynchronously.
      * 
@@ -79,7 +69,7 @@ export class ExamplePlatformAccessory {
      * the `updateCharacteristic` method.
      * 
      */
-    let motionDetected = false;
+    /* let motionDetected = false;
     setInterval(() => {
       // EXAMPLE - inverse the trigger
       motionDetected = !motionDetected;
@@ -90,7 +80,7 @@ export class ExamplePlatformAccessory {
 
       this.platform.log.debug('Triggering motionSensorOneService:', motionDetected);
       this.platform.log.debug('Triggering motionSensorTwoService:', !motionDetected);
-    }, 20000);
+    }, 20000); */
   }
 
   /**
@@ -101,10 +91,9 @@ export class ExamplePlatformAccessory {
 
     // implement your own code to turn your device on/off
     this.exampleStates.On = value as boolean;
-
-    this.platform.log.debug('Set Characteristic On ->', value);
-
+    this.platform.log.debug('Lampe-1 An  ->', value);
     // you must call the callback function
+    this.exampleStates.On = false;
     callback(null);
   }
 
@@ -125,9 +114,7 @@ export class ExamplePlatformAccessory {
 
     // implement your own code to check if the device is on
     const isOn = this.exampleStates.On;
-
-    this.platform.log.debug('Get Characteristic On ->', isOn);
-
+    this.platform.log.debug('Lampe-2 An ->', isOn);
     // you must call the callback function
     // the first argument should be null if there were no errors
     // the second argument should be the value to return
@@ -139,14 +126,27 @@ export class ExamplePlatformAccessory {
    * These are sent when the user changes the state of an accessory, for example, changing the Brightness
    */
   setBrightness(value: CharacteristicValue, callback: CharacteristicSetCallback) {
-
     // implement your own code to set the brightness
     this.exampleStates.Brightness = value as number;
-
-    this.platform.log.debug('Set Characteristic Brightness -> ', value);
+    this.platform.log.debug('Brightness -> ', value);
 
     // you must call the callback function
     callback(null);
   }
 
+  setHue(value: CharacteristicValue, callback: CharacteristicSetCallback) {
+    // implement your own code to set the brightness
+    this.exampleStates.Hue = value as number;
+    this.platform.log.debug('Hue -> ', value);
+    // you must call the callback function
+    callback(null);
+  }
+
+  setSaturation(value: CharacteristicValue, callback: CharacteristicSetCallback) {
+    // implement your own code to set the brightness
+    this.exampleStates.Saturation = value as number;
+    this.platform.log.debug('Saturation -> ', value);
+    // you must call the callback function
+    callback(null);
+  }
 }
