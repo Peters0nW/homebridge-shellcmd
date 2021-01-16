@@ -1,22 +1,39 @@
 {
-  "pluginAlias": "homebridge-shellcmd",
+  "pluginAlias": "homebridge-shell-cmd",
   "pluginType": "platform",
   "singular": true,
   "schema": {
     "type": "object",
     "properties": {
       "name": {
-        "title": "Name",
+        "title": "PluginName",
         "type": "string",
         "required": true,
-        "default": "homebridge-shellcmd"
+        "default": "homebridge-shell-cmd"
       },
       "manufacturer": {
         "title": "Manufacturer",
         "type": "string",
         "required": false,
         "default": "Peters0nW"
-      }
+      },
+        "model": {
+        "title": "Model",
+        "type": "string",
+        "required": false,
+        "default": "WHT-XXX"
+      },
+        "serialnr": {
+        "title": "Serial Number",
+        "type": "string",
+        "required": false,
+        "default": "XXXX-XXXX"
+      },
+        "serialnr": {
+        "title": "Serial Number",
+        "type": "string",
+        "required": false,
+        "default": "XXXX-XXXX"
     }
   }
 }

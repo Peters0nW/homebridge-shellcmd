@@ -1,4 +1,4 @@
-import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback } from 'homebridge';
+import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback, UUID } from 'homebridge';
 
 import { ExampleHomebridgePlatform } from './platform';
 
@@ -26,9 +26,9 @@ export class ExamplePlatformAccessory {
 
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
-      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Default-Manufacturer')
-      .setCharacteristic(this.platform.Characteristic.Model, 'Default-Model')
-      .setCharacteristic(this.platform.Characteristic.SerialNumber, 'Default-Serial');
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, "Peters0nW")
+      .setCharacteristic(this.platform.Characteristic.Model, 'WHT-9999')
+      .setCharacteristic(this.platform.Characteristic.SerialNumber, accessory.UUID);
 
     // get the LightBulb service if it exists, otherwise create a new LightBulb service
     // you can create multiple services for each accessory
@@ -69,6 +69,7 @@ export class ExamplePlatformAccessory {
     const motionSensorTwoService = this.accessory.getService('Motion Sensor Two Name') ||
       this.accessory.addService(this.platform.Service.MotionSensor, 'Motion Sensor Two Name', 'YourUniqueIdentifier-2');
 
+    
     /**
      * Updating characteristics values asynchronously.
      * 
@@ -89,7 +90,7 @@ export class ExamplePlatformAccessory {
 
       this.platform.log.debug('Triggering motionSensorOneService:', motionDetected);
       this.platform.log.debug('Triggering motionSensorTwoService:', !motionDetected);
-    }, 10000);
+    }, 20000);
   }
 
   /**
