@@ -54,8 +54,8 @@ export class ShellCommander implements DynamicPlatformPlugin {
     // or a user-defined array in the platform config.
     const Devices = [
       {
-        UniqueId: 'SW',
-        DisplayName: 'Switch',
+        UniqueId: 'SC',
+        DisplayName: 'ShellCommander',
       },
     ];
 
@@ -94,18 +94,18 @@ export class ShellCommander implements DynamicPlatformPlugin {
         // the accessory does not yet exist, so we need to create it
         this.log.info('Adding new accessory:', device.DisplayName);
         // create a new accessory
-        const switchAccessory = new this.api.platformAccessory(device.DisplayName, uuid);
+        const LightAccessory = new this.api.platformAccessory(device.DisplayName, uuid);
 
         // store a copy of the device object in the `accessory.context`
         // the `context` property can be used to store any data about the accessory you may need
-        switchAccessory.context.device = device;
+        LightAccessory.context.device = device;
 
         // create the accessory handler for the newly create accessory
         // this is imported from `platformAccessory.ts`
-        new ShellCommanderAccessory(this, switchAccessory);
+        new ShellCommanderAccessory(this, LightAccessory);
 
         // link the accessory to your platform
-        this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [switchAccessory]);
+        this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [LightAccessory]);
       }
     }
   }

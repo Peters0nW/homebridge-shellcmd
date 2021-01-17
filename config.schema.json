@@ -11,16 +11,22 @@
         "required": true,
         "default": "homebridge-shell-cmd"
       },
+        "manufracturer": {
+        "title": "Type",
+        "type": "string",
+        "required": true,
+        "default": "Peters0nW"
+      },
       "model": {
         "title": "Model",
         "type": "string",
-        "required": true,
+        "required": false,
         "default": ""
       },
       "serialnr": {
         "title": "Seriennummer",
         "type": "string",
-        "required": true,
+        "required": false,
         "default": ""
       },
       "firmware": {
@@ -39,7 +45,10 @@
         "title": "Type",
         "type": "string",
         "required": true,
-        "default": "Peters0nW"
+        "switch": [
+          "Light Bulb",
+          "Switch"
+          ]
       }
     }
   }
