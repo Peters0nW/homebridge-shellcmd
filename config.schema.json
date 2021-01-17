@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "homebridge-shell-cmd",
+  "pluginAlias": "homebridge-shell-commander",
   "pluginType": "platform",
   "singular": true,
   "schema": {
@@ -9,10 +9,10 @@
         "title": "PluginName",
         "type": "string",
         "required": true,
-        "default": "homebridge-shell-cmd"
+        "default": "homebridge-shell-commander"
       },
         "manufracturer": {
-        "title": "Type",
+        "title": "Manufacturer",
         "type": "string",
         "required": true,
         "default": "Peters0nW"
@@ -41,14 +41,11 @@
         "required": false,
         "placeholder": "1.0"
       },
-      "type": {
-        "title": "Type",
+      "device": {
+        "title": "Device",
         "type": "string",
         "required": true,
-        "switch": [
-          "Light Bulb",
-          "Switch"
-          ]
+        "default": "Lightbulb"
       }
     }
   }

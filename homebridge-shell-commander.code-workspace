@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../.homebridge"
+		},
+		{
+			"path": "../../homebridge"
+		}
+	],
+	"settings": {}
+}

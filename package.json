@@ -1,16 +1,16 @@
 {
   "private": true,
-  "displayName": "Shell CMD",
-  "name": "homebridge-shell-cmd",
-  "version": "1.0.2",
-  "description": "A short description about what your plugin does.",
+  "displayName": "Shell Commander",
+  "name": "homebridge-shell-commander",
+  "version": "1.0",
+  "description": "Try to execute diffrent Shell Commands",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Peters0nW/homebridge-shellcmd.git"
+    "url": "https://github.com/Peters0nW/homebridge-shell-commander.git"
   },
   "bugs": {
-    "url": "https://github.com/Peters0nW/homebridge-shellcmd/issues"
+    "url": "https://github.com/Peters0nW/homebridge-shell-commander/issues/new"
   },
   "engines": {
     "node": ">=10.17.0",
@@ -24,7 +24,8 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "homebridge-shell-commander"
   ],
   "dependencies": {},
   "devDependencies": {

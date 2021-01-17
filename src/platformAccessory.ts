@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback, ButtonState } from 'homebridge';
+import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback } from 'homebridge';
 import { config } from 'process';
 import { ShellCommander } from './platform';
 
@@ -43,7 +43,7 @@ export class ShellCommanderAccessory {
       .on('set', this.setHue.bind(this));
     this.service.getCharacteristic(this.platform.Characteristic.Saturation)
       .on('set', this.setSaturation.bind(this));
-    
+
     //this.service1 = this.accessory.getService(this.platform.Service.Switch) || this.accessory.addService(this.platform.Service.Switch)
     // set the service name, this is what is displayed as the default name on the Home app
     // in this example we are using the name we stored in the `accessory.context` in the `discoverDevices` method.
@@ -107,9 +107,8 @@ export class ShellCommanderAccessory {
    * this.service.updateCharacteristic(this.platform.Characteristic.On, true)
    */
   getOn(callback: CharacteristicGetCallback) {
-    const state = this.LightbulbStates.On;
     const isOn = this.LightbulbStates.On;
-    if (isOn != false) {
+    if (isOn !== false) {
       this.platform.log.debug('RGB-Led ist An');
     } else {
       this.platform.log.debug('RGB-Led ist Aus');
@@ -120,10 +119,16 @@ export class ShellCommanderAccessory {
     callback(null, isOn);
   }
 
-  /**
-   * Handle "SET" requests from HomeKit
-   * These are sent when the user changes the state of an accessory, for example, changing the Brightness
-   */
+  //HUE
+  setHue(value: CharacteristicValue, callback: CharacteristicSetCallback) {
+    // implement your own code to set the brightness
+    this.LightbulbStates.Hue = value as number;
+    this.platform.log.debug('Hue -> ', value);
+    // you must call the callback function
+    callback(null);
+  }
+  
+  //BRIGHTNESS
   setBrightness(value: CharacteristicValue, callback: CharacteristicSetCallback) {
     // implement your own code to set the brightness
     this.LightbulbStates.Brightness = value as number;
@@ -132,15 +137,8 @@ export class ShellCommanderAccessory {
     // you must call the callback function
     callback(null);
   }
-
-  setHue(value: CharacteristicValue, callback: CharacteristicSetCallback) {
-    // implement your own code to set the brightness
-    this.LightbulbStates.Hue = value as number;
-    this.platform.log.debug('Hue -> ', value);
-    // you must call the callback function
-    callback(null);
-  }
-
+  
+  //SATURATION
   setSaturation(value: CharacteristicValue, callback: CharacteristicSetCallback) {
     // implement your own code to set the brightness
     this.LightbulbStates.Saturation = value as number;
