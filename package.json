@@ -10,7 +10,7 @@
     "url": "https://github.com/Peters0nW/homebridge-shell-commander.git"
   },
   "bugs": {
-    "url": "https://github.com/Peters0nW/homebridge-shell-commander/issues/new"
+    "url": "https://github.com/Peters0nW/homebridge-shell-commander/issues/"
   },
   "engines": {
     "node": ">=10.17.0",
@@ -24,8 +24,7 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin",
-    "homebridge-shell-commander"
+    "homebridge-plugin"
   ],
   "dependencies": {},
   "devDependencies": {

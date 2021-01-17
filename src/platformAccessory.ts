@@ -17,9 +17,9 @@ export class ShellCommanderAccessory {
    */
   private LightbulbStates = {
     On: false,
-    Brightness: 254,
+    Brightness: 255,
     Hue: 0,
-    Saturation: 100,
+    Saturation: 255,
   };
 
   constructor(
