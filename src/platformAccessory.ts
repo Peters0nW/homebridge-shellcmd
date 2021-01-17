@@ -1,20 +1,20 @@
-import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback } from 'homebridge';
-
-import { ExampleHomebridgePlatform } from './platform';
+import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallback, CharacteristicGetCallback, ButtonState } from 'homebridge';
+import { config } from 'process';
+import { ShellCommander } from './platform';
 
 /**
  * Platform Accessory
  * An instance of this class is created for each accessory your platform registers
  * Each accessory may expose multiple services of different service types.
  */
-export class ExamplePlatformAccessory {
+export class ShellCommanderAccessory {
   private service: Service;
-
+  private service1: Service;
   /**
    * These are just used to create a working example
    * You should implement your own code to track the state of your accessory
    */
-  private exampleStates = {
+  private LightbulbStates = {
     On: false,
     Brightness: 100,
     Hue: 0,
@@ -22,20 +22,20 @@ export class ExamplePlatformAccessory {
   };
 
   constructor(
-    private readonly platform: ExampleHomebridgePlatform,
+    private readonly platform: ShellCommander,
     private readonly accessory: PlatformAccessory,
   ) {
 
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
       .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Peters0nW')
-      .setCharacteristic(this.platform.Characteristic.Model, 'Model-EINS')
+      .setCharacteristic(this.platform.Characteristic.Model, 'model-nr')
       .setCharacteristic(this.platform.Characteristic.SerialNumber, accessory.UUID);
 
     // get the LightBulb service if it exists, otherwise create a new LightBulb service
     // you can create multiple services for each accessory
     this.service = this.accessory.getService(this.platform.Service.Lightbulb) || this.accessory.addService(this.platform.Service.Lightbulb);
-
+    this.service1 = this.accessory.getService(this.platform.Service.Switch) || this.accessory.addService(this.platform.Service.Switch)
     // set the service name, this is what is displayed as the default name on the Home app
     // in this example we are using the name we stored in the `accessory.context` in the `discoverDevices` method.
     // this.service.setCharacteristic(this.platform.Characteristic.Name, accessory.context.device.exampleDisplayName);
@@ -51,9 +51,6 @@ export class ExamplePlatformAccessory {
       .on('set', this.setHue.bind(this));
     this.service.getCharacteristic(this.platform.Characteristic.Saturation)
       .on('set', this.setSaturation.bind(this));
-
-      this.accessory.addService(this.platform.Service.TemperatureSensor, 'tempSensor', 'B001');
-
     // Example: add two "motion sensor" services to the accessory
     /*     
         const humidity-2 = this.accessory.getService('Sensor Two') ||
@@ -82,7 +79,6 @@ export class ExamplePlatformAccessory {
       this.platform.log.debug('Triggering motionSensorTwoService:', !motionDetected);
     }, 20000); */
   }
-
   /**
    * Handle "SET" requests from HomeKit
    * These are sent when the user changes the state of an accessory, for example, turning on a Light bulb.
@@ -90,10 +86,10 @@ export class ExamplePlatformAccessory {
   setOn(value: CharacteristicValue, callback: CharacteristicSetCallback) {
 
     // implement your own code to turn your device on/off
-    this.exampleStates.On = value as boolean;
+    this.LightbulbStates.On = value as boolean;
     this.platform.log.debug('Lampe-1 An  ->', value);
     // you must call the callback function
-    this.exampleStates.On = false;
+    this.LightbulbStates.On = false;
     callback(null);
   }
 
@@ -113,7 +109,7 @@ export class ExamplePlatformAccessory {
   getOn(callback: CharacteristicGetCallback) {
 
     // implement your own code to check if the device is on
-    const isOn = this.exampleStates.On;
+    const isOn = this.LightbulbStates.On;
     this.platform.log.debug('Lampe-2 An ->', isOn);
     // you must call the callback function
     // the first argument should be null if there were no errors
@@ -127,7 +123,7 @@ export class ExamplePlatformAccessory {
    */
   setBrightness(value: CharacteristicValue, callback: CharacteristicSetCallback) {
     // implement your own code to set the brightness
-    this.exampleStates.Brightness = value as number;
+    this.LightbulbStates.Brightness = value as number;
     this.platform.log.debug('Brightness -> ', value);
 
     // you must call the callback function
@@ -136,7 +132,7 @@ export class ExamplePlatformAccessory {
 
   setHue(value: CharacteristicValue, callback: CharacteristicSetCallback) {
     // implement your own code to set the brightness
-    this.exampleStates.Hue = value as number;
+    this.LightbulbStates.Hue = value as number;
     this.platform.log.debug('Hue -> ', value);
     // you must call the callback function
     callback(null);
@@ -144,7 +140,7 @@ export class ExamplePlatformAccessory {
 
   setSaturation(value: CharacteristicValue, callback: CharacteristicSetCallback) {
     // implement your own code to set the brightness
-    this.exampleStates.Saturation = value as number;
+    this.LightbulbStates.Saturation = value as number;
     this.platform.log.debug('Saturation -> ', value);
     // you must call the callback function
     callback(null);

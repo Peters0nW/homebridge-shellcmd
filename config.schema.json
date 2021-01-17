@@ -11,29 +11,35 @@
         "required": true,
         "default": "homebridge-shell-cmd"
       },
-      "manufacturer": {
-        "title": "Manufacturer",
-        "type": "string",
-        "required": false,
-        "default": "Peters0nW"
-      },
       "model": {
         "title": "Model",
         "type": "string",
-        "required": false,
-        "default": "WHT-XXX"
+        "required": true,
+        "default": ""
       },
       "serialnr": {
-        "title": "Serial Number",
+        "title": "Seriennummer",
         "type": "string",
-        "required": false,
-        "default": "XXXX-XXXX"
+        "required": true,
+        "default": ""
       },
       "firmware": {
-        "title": "Firmware Rev.",
+        "title": "FirmwareRevision",
         "type": "string",
         "required": false,
-        "default": "1.0"
+        "placeholder": "1.0"
+      },
+      "software": {
+        "title": "SoftwareRevision",
+        "type": "string",
+        "required": false,
+        "placeholder": "1.0"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "required": true,
+        "default": "Peters0nW"
       }
     }
   }
